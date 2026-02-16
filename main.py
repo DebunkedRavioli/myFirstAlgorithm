@@ -1,28 +1,28 @@
 import time
 
-# 1️⃣ Welcome and ask for name/class
+#Welcome and ask for name/class
 print("Welcome to GHS School Canteen!")
 time.sleep(1)
 
 student_name = input("Name? ")
 student_class = input("Class? ")
 
-print(f"\nHello {student_name}! What would you like today?\n") # The /n makes python go to the new line
+print(f"\nHello {student_name}! What would you like today?\n")
 time.sleep(1)
 
-# 2️⃣ Menu dictionary
+# Menu dictionary
 menu = {
-    "1": ("Burger", 5),#Comma makes it so that the one below doesnt come up as red
+    "1": ("Burger", 5),
     "2": ("Fries", 2.5),
     "3": ("Soda", 1.5),
     "4": ("Sandwich", 4),
     "5": ("Garlic Bread", 2)
 }
 
-# 3️⃣ Store selected items
+# Store selected items
 order = []
 
-# 4️⃣ Loop to select multiple items or remove
+# Loop to select multiple items or remove
 while True:
     print("----- SCHOOL CANTEEN MENU -----")
     for number, (item, price) in menu.items():
@@ -38,11 +38,9 @@ while True:
         if not order:
             print("Your order is empty, nothing to remove!\n")
             continue
-        # Show current order
         print("\nYour current order:")
         for i, (item, price) in enumerate(order, 1):
             print(f"{i}. {item} - ${price}")
-        # Ask which one to remove
         remove_choice = input("Enter the number of the item to remove: ")
         if remove_choice.isdigit() and 1 <= int(remove_choice) <= len(order):
             removed_item = order.pop(int(remove_choice)-1)
@@ -55,7 +53,19 @@ while True:
     else:
         print("Invalid choice! Try again.\n")
 
-# 5️⃣ Print receipt
+# -------- DISCOUNT FUNCTION --------
+def apply_discount(total):
+    discount_rate = 0.20  # 20% discount
+    if total >= 20:
+        discount = total * discount_rate
+        total -= discount
+        print(f"\nDiscount applied: -${discount:.2f}")
+    else:
+        print("\nNo discount applied.")
+    return total
+# -----------------------------------
+
+# Print receipt
 print("\n===== RECEIPT =====")
 time.sleep(1)
 print(f"Name: {student_name}")
@@ -68,7 +78,10 @@ for item, price in order:
     print(f"{item} - ${price}")
     total += price
 
-print(f"\nTotal: ${total}")
+# Apply discount
+total = apply_discount(total)
+
+print(f"\nFinal Total: ${total:.2f}")
 time.sleep(1)
 print("===================")
 time.sleep(1)
